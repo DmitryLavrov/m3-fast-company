@@ -9,7 +9,7 @@ router.route('/')
         try {
           const {orderBy, equalTo} = req.query
 
-          const list = Comment.find({[orderBy]: equalTo})
+          const list = await Comment.find({[orderBy]: equalTo})
 
           res.status(200).send(list)
 
@@ -39,7 +39,7 @@ router.route('/')
 router.delete('/:commentId', auth, async (req, res) => {
   try {
     const {commentId} = req.params
-    const removedComment = Comment.findById(commentId)
+    const removedComment = await Comment.findById(commentId)
 
     if (removedComment.userId.toString() === req.user._id) {
       await removedComment.deleteOne()
