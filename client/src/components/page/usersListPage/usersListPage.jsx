@@ -30,12 +30,12 @@ const UsersListPage = () => {
   if (!allUsers) return <h3>Loading...</h3>
 
   const handleBookmark = (userId) => {
-    const newArray = allUsers.map((user) => {
-      if (user._id === userId) {
-        return {...user, bookmark: !user.bookmark}
-      }
-      return user
-    })
+    // const newArray = allUsers.map((user) => {
+    //   if (user._id === userId) {
+    //     return {...user, bookmark: !user.bookmark}
+    //   }
+    //   return newArray
+    // })
   }
 
   const handlePageChange = (pageIndex) => {
