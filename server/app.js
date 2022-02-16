@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   }))
 
   host = '0.0.0.0'
+  port = process.env.PORT || 80
 
 } else if (process.env.NODE_ENV === 'development') {
   console.log('Development:')
