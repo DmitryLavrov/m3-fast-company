@@ -17,22 +17,24 @@ app.use(cors())
 
 app.use('/api', routes)
 
+let port = config.get('port') ?? 8080
+let host = config.get('host') ?? 'localhost'
+
 if (process.env.NODE_ENV === 'production') {
   console.log('Production:')
-  app.use('/', express.static(path.join(__dirname, 'client')))
+  app.use('/', express.static(path.join(__dirname, 'client-build')))
 
-  const indexPath = path.join(__dirname, 'client', 'index.html')
+  const indexPath = path.join(__dirname, 'client-build', 'index.html')
   app.get('*', ((req, res) => {
     res.sendFile(indexPath)
   }))
 
+  host = '0.0.0.0'
 
 } else if (process.env.NODE_ENV === 'development') {
   console.log('Development:')
 }
 
-const port = config.get('port') ?? 8080
-const host = config.get('host') ?? 'localhost'
 const mongoUri = config.get('mongoUri')
                        .replace('<user>', config.get('mongoUser'))
                        .replace('<password>', config.get('mongoPassword'))
