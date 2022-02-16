@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const mongoose = require('mongoose')
 const config = require('config')
 const chalk = require('chalk')
@@ -16,11 +17,19 @@ app.use(cors())
 
 app.use('/api', routes)
 
-// if (process.env.NODE_ENV === 'production') {
-//   console.log('Production:')
-// } else if (process.env.NODE_ENV === 'development') {
-//   console.log('Development:')
-// }
+if (process.env.NODE_ENV === 'production') {
+  console.log('Production:')
+  app.use('/', express.static(path.join(__dirname, 'client')))
+
+  const indexPath = path.join(__dirname, 'client', 'index.html')
+  app.get('*', ((req, res) => {
+    res.sendFile(indexPath)
+  }))
+
+
+} else if (process.env.NODE_ENV === 'development') {
+  console.log('Development:')
+}
 
 const port = config.get('port') ?? 8080
 const host = config.get('host') ?? 'localhost'
